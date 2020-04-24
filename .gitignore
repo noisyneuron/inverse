@@ -1,0 +1,6 @@
+# Ignore everything:
+/*
+
+# Except for the themes directories:
+!.gitignore
+!docs/

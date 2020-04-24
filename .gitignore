@@ -4,3 +4,4 @@
 # Except for the themes directories:
 !.gitignore
 !docs/
+!README.md

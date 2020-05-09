@@ -1,0 +1,350 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Neuton:200,300,400,400i,700,800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  transform: translateZ(0);
+}
+
+html {
+  font-size: 16px;
+  font-family: 'Lato';
+  --sidebar-width: 100px;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(16, 1fr) repeat(3, 90px) 100px;
+  grid-template-rows: repeat(20,1fr);
+  align-items: stretch;
+  justify-items: stretch;
+  background-color: #f5ecec;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  left: 0;
+  transition: left 0.3s;
+}
+
+.sidebar {
+  width: 0;
+  overflow: hidden;
+  height: 100%;
+  padding: 0rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #595959;
+  box-shadow: inset -20px 0px 20px -16px rgba(0, 0, 0, 0.67);
+  transition: all 0.3s;
+}
+
+.container-split {
+  .main {
+    width: calc( 100% - var(--sidebar-width) );
+    left: var(--sidebar-width);
+  }
+  .sidebar {
+    width: var(--sidebar-width);
+    padding: 1rem 0.5rem 1rem 1rem;
+  }
+}
+
+.help {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+
+
+
+
+section {
+  box-shadow: 0 0 8px 1px rgba(0, 0, 0, 0.3);
+  background-color: white;
+}
+
+h2 {
+  font-size: 0.9rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+p {
+  color: rgba(0,0,0,0.7);
+  padding: 0.4rem 0;
+  font-size: 0.8rem;
+}
+
+input {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  display: block;
+  margin: 1rem 0;
+  color: rgba(0,0,0,0.7);
+}
+
+
+.button {
+  padding: 0.5rem;
+  -webkit-appearance: none;
+  border-radius: 0;
+  background-color: white;
+  border: 0.5px solid silver;
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: 'Lato';
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0,0,0,0.7);
+  cursor: pointer;
+}
+
+.button-inverted {
+  border-color: rgba(180,180,180,0.7);
+  color: rgba(180,180,180,0.7);
+  background-color: rgba(40,40,40,0.7);
+}
+
+.dropdown {
+  padding: 0.5rem;
+  -webkit-appearance: none;
+  border-radius: 0;
+  padding-right: 1.6rem;
+  background-color: white;
+  border: 0.5px solid silver;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' preserveAspectRatio='none'%3E%3Cpolygon fill='none' stroke='black' stroke-width='2%25' points='2 2 8 2 5 8' /%3E%3C/svg%3E");
+  background-size: 1.4rem 0.9rem;
+  background-repeat: no-repeat;
+  background-position: center right;
+  line-height: 1;
+  text-transform: uppercase;
+  font-family: 'Lato';
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(0,0,0,0.7);
+}
+
+
+
+/* ~~~~~~~~~~~~~~~~~ EDITOR ~~~~~~~~~~~~~~~~~ */
+.editor {
+  grid-column-start: 2;
+  grid-column-end: 7;
+  grid-row-start: 2;
+  grid-row-end: 15;
+  z-index: 1;
+}
+
+.editor__textarea {
+  -webkit-appearance: normal;
+  width: 100%;
+  height:100%;
+  padding: 1rem;
+  font-family: 'Neuton';
+  font-size: 1.2rem;
+  line-height: 1.3;
+  resize: none;
+  outline: none;
+  border: none;
+}
+/* ~~~~~~~~~~~~~~~~~ EDITOR ~~~~~~~~~~~~~~~~~ */
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~ CANVAS ~~~~~~~~~~~~~~~~~ */
+.canvas {
+  grid-column-start: 3;
+  grid-column-end: 16;
+  grid-row-start: 3;
+  grid-row-end: 20;
+}
+.canvas canvas {
+  width: 100%;
+  height: 100%;
+}
+/* ~~~~~~~~~~~~~~~~~ CANVAS ~~~~~~~~~~~~~~~~~ */
+
+
+
+
+/* ~~~~~~~~~~~~~~~~~ WORDTABLE ~~~~~~~~~~~~~~~~~ */
+.wordtable {
+  grid-column-start: 17;
+  grid-column-end: 20;
+  grid-row-start: 1;
+  grid-row-end: 21;
+  overflow: scroll;
+  box-shadow: inset 20px 0px 20px -16px rgba(0, 0, 0, 0.67);
+  border-right: 1px solid rgba(0,0,0,0.2);
+  padding: 1rem;
+}
+
+.wordtable__menu {
+  margin-bottom: 1rem;
+  .button-createmap {
+    display: block;
+    margin: 0.2rem 0;
+  }
+}
+
+.map {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr ) ;
+  grid-gap: 0px;
+  border-top: 1px solid rgba(0,0,0,0.2);
+
+  p {
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    color: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    &:nth-child(2n-1) {
+      font-style:italic;
+    }
+  }
+
+  input {
+    margin: 0rem;
+    display: flex;
+    align-items: center;
+    padding: 0.2rem 0.4rem;
+    font-size: 0.8rem;
+  }
+}
+/* ~~~~~~~~~~~~~~~~~ WORDTABLE ~~~~~~~~~~~~~~~~~ */
+
+
+
+/* ~~~~~~~~~~~~~~~~~ STACK ~~~~~~~~~~~~~~~~~ */
+.stack {
+  box-shadow: none;
+  grid-column-start: 20;
+  grid-column-end: 21;
+  grid-row-start: 1;
+  grid-row-end: 21;
+  padding: 1rem;
+  overflow: scroll;
+}
+
+.stack__elements {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stack__element {
+  border: 1px solid rgba(0,0,0,0.4);
+  padding: 0.2rem 0.3rem;
+  margin: 0.2rem 0;
+  position: relative;
+  overflow: visible;
+  text-align: center;
+  font-size: 0.7rem;
+  color: rgba(0,0,0,0.7);
+
+  &::after {
+    content: attr(data-count);
+    position: absolute;
+    bottom: -0.2rem;
+    right: -0.5rem;
+    font-size: 0.5rem;
+  }
+}
+
+/* ~~~~~~~~~~~~~~~~~ STACK ~~~~~~~~~~~~~~~~~ */
+
+
+
+/* ~~~~~~~~~~~~~~~~~ EXAMPLES ~~~~~~~~~~~~~~~~~ */
+
+.sidebar h2 {
+  color: rgba(255,255,255,0.7);
+}
+
+.sidebar__nav {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  width: 100%;
+}
+
+.sidebar__examples {
+  position: relative;
+  height: calc(100% - 6rem);
+  overflow-y:scroll;
+  overflow-x: hidden;
+}
+
+.sidebar__examples .stack__elements {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  &.active {
+    left: 0;
+  }
+}
+
+.stack__element-inverted {
+  width: calc(100% - 0.5rem);
+  border: 1px solid rgba(255,255,255,0.4);
+  color: rgba(255,255,255,0.7);
+}
+
+
+/* ~~~~~~~~~~~~~~~~~ EXAMPLES ~~~~~~~~~~~~~~~~~ */
+
+
+
+/* ~~~~~~~~~~~~~~~~~ OVERLAY ~~~~~~~~~~~~~~~~~ */
+
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0; left: 0;
+  background-color: rgba(0,0,0,0.2);
+  align-items: center;
+  justify-content: center;
+  display: none;
+  &.visible { display: flex; }
+}
+
+.overlay__wrapper {
+  position: relative;
+  width: auto;
+  height: auto;
+  max-width: 95vw;
+  max-height: 95vh;
+  overflow: scroll;
+  .button-close {
+    position: absolute;
+    top: 0; right: 0;
+  }
+}
+
+.overlay__content {
+  box-shadow: 0 0 20px 2px rgba(0, 0, 0, 0.6);
+  background-color: white;
+  padding: 2rem;
+  display: none;
+  &.visible { display: block; }
+}
+
+/* ~~~~~~~~~~~~~~~~~ OVERLAY ~~~~~~~~~~~~~~~~~ */

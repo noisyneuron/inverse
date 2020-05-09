@@ -1,7 +1,13 @@
-# Ignore everything:
-/*
+yarn.lock*
+package-lock.json
 
-# Except for the themes directories:
-!.gitignore
-!docs/
-!README.md
+# Dependency directories
+node_modules/
+
+# Parcel related files
+.cache/
+
+.DS_Store
+
+wordtables/custom_thesis.js
+wordtables/august_1.js

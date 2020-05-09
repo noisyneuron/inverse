@@ -3,6 +3,8 @@ let Mapping = require('../src/Mapping');
 
 module.exports = [
 
+  (new Mapping('custom_demo', require('../wordtables/custom_demo.js'))),
+
   (new Mapping('aesop_1', require('../wordtables/aesop_1.js'))),
   (new Mapping('aesop_2', require('../wordtables/aesop_2.js'))),
   (new Mapping('aesop_3', require('../wordtables/aesop_3.js'))),

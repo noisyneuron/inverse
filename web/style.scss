@@ -63,9 +63,30 @@ html {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
+.home {
+  display: block;
+  margin-bottom: 0.5rem;
+}
 
+.home h1 {
+  font-family: linotype-sabon, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.home a {
+  text-decoration: none;
+  color: #a59999;
+}
+
+.help .buttons {
+  display: flex;
+  justify-content: space-between;
+}
 
 
 section {

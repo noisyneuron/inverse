@@ -21,6 +21,7 @@ let $examplesHolder = document.querySelector(".sidebar__examples");
 let $examples;// = document.querySelectorAll(".sidebar__example");
 
 let $overlay = document.querySelector(".overlay");
+let $overlayWrapper = document.querySelector(".overlay__wrapper");
 let $mapForm = document.querySelector(".map__form");
 let $mapTitle = document.querySelector("#map__title");
 
@@ -288,6 +289,11 @@ $prevEg.addEventListener('click', () => {
   changeExample(-1);
 });
 
+$overlayWrapper.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+$overlay.addEventListener('click', closeOverlay);
 
 canvas.init();
 displayMapOptions();

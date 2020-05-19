@@ -27,4 +27,4 @@ A very rough and incomplete guide lives [here](guide.md). This will soon be upda
 * [Chef](https://esolangs.org/wiki/Chef) - an esoteric language by David Morgan-Mar
 * [Shakespeare](https://esolangs.org/wiki/Shakespeare) - an esoteric language by Karl Hasselström and Jon Åslund
 * [Shaderforth](https://github.com/daeken/Shaderforth) - A shader language inspired by Forth, by Cody Brocious
-* [estoric.codes](https://esoteric.codes/) - a blog/website dedicated to esolangs, created by Daniel Temkin
+* [esoteric.codes](https://esoteric.codes/) - a blog/website dedicated to esolangs, created by Daniel Temkin

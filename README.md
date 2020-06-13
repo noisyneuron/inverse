@@ -29,4 +29,5 @@ A very rough and incomplete guide lives [here](guide.md). This will soon be upda
 * [Shakespeare](https://esolangs.org/wiki/Shakespeare) - an esoteric language by Karl Hasselström and Jon Åslund
 * [Shaderforth](https://github.com/daeken/Shaderforth) - A shader language inspired by Forth, by Cody Brocious
 * [Forth Haiku](https://forthsalon.appspot.com/) - Forth to GLSL, by [Brad Nelson](http://bradn123.github.io/)
+* [Hydra](https://github.com/ojack/hydra) - livecoding networked visuals in the browser, by Olivia Jack
 * [esotoric.codes](https://esoteric.codes/) - a blog/website dedicated to esolangs, created by Daniel Temkin

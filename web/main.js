@@ -173,6 +173,7 @@ let publish = () => {
       mode: 'cors',
       headers: {
         "Content-Type": "application/json; charset=utf-8",
+        "X-PINGOTHER": "pingpong"
       },
       body: JSON.stringify(data),
     })

@@ -104,8 +104,9 @@ let compile = () => {
   return { nodes, glsl }
 }
 
-let loadNewMapping = (name, table) => {
+let loadNewMapping = (name, table, modified) => {
   let newMap = new Mapping(name, table);
+  newMap.modified = modified;
   Maps.push(newMap);
   currentMapIdx = Maps.length - 1;
   displayMapOptions();
@@ -116,7 +117,8 @@ let loadProgram = (data) => {
   $editor.value = unescape(data.program);
   let m = Maps.findIndex( x => x.name==data.map.name);
   if(data.map.modified || m === -1) {
-    loadNewMapping("*" + data.map.name, data.map.table);
+    console.log('loading mpa?');
+    loadNewMapping("*" + data.map.name, data.map.table, true);
   } else {
     $mapSelect.value = m;
   }
@@ -136,7 +138,6 @@ let getSaveData = () => {
       modified: m.modified
     },
     parent: PARENT
-    // ,stack: res.nodes
   };
   return data;
 }
@@ -242,7 +243,7 @@ let saveMap = () => {
         customMapCount++;
         n = `custom_${customMapCount}`;
       }
-      loadNewMapping(n, wt);
+      loadNewMapping(n, wt, false);
       closeOverlay();
     }
   }

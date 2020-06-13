@@ -10,12 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "jest": "^25.2.7",
-    "pos": "^0.4.2",
     "sass": "^1.26.3"
   },
-  "dependencies": {
-    "lemmer": "^0.3.0",
-    "word2vector": "^2.2.1",
-    "wordpos": "^2.0.0"
-  }
+  "dependencies": {}
 }

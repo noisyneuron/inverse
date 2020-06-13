@@ -8,10 +8,10 @@ A very rough and incomplete guide lives [here](guide.md). This will soon be upda
 
 ### todos
 * add functionality for:
-  - [ ] publish to gallery
-  - [ ] publish to twitter
-  - [ ] forking
-  - [ ] redo front-end with react 
+  - [x] publish to gallery
+  - [x] publish to twitter
+  - [x] forking
+  - [ ] redo front-end / un-sphagetti the code
   - [ ] supporting different languages / scripts
   - [ ] additional stack manipulation functions
   - [ ] additional GLSL functions (dot, normal etc)

@@ -1,5 +1,6 @@
 yarn.lock*
 package-lock.json
+package-old.json
 
 # Dependency directories
 node_modules/

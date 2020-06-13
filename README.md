@@ -11,6 +11,7 @@ A very rough and incomplete guide lives [here](guide.md). This will soon be upda
   - [ ] publish to gallery
   - [ ] publish to twitter
   - [ ] forking
+  - [ ] redo front-end with react 
   - [ ] supporting different languages / scripts
   - [ ] additional stack manipulation functions
   - [ ] additional GLSL functions (dot, normal etc)
@@ -27,4 +28,5 @@ A very rough and incomplete guide lives [here](guide.md). This will soon be upda
 * [Chef](https://esolangs.org/wiki/Chef) - an esoteric language by David Morgan-Mar
 * [Shakespeare](https://esolangs.org/wiki/Shakespeare) - an esoteric language by Karl Hasselström and Jon Åslund
 * [Shaderforth](https://github.com/daeken/Shaderforth) - A shader language inspired by Forth, by Cody Brocious
-* [estoric.codes](https://esoteric.codes/) - a blog/website dedicated to esolangs, created by Daniel Temkin
+* [Forth Haiku](https://forthsalon.appspot.com/) - Forth to GLSL, by [Brad Nelson](http://bradn123.github.io/)
+* [esotoric.codes](https://esoteric.codes/) - a blog/website dedicated to esolangs, created by Daniel Temkin

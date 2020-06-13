@@ -2,6 +2,8 @@ const canvas = document.querySelector("#glCanvas");
 const gl = canvas.getContext("webgl");
 if(gl === null) { alert("no webgl"); }
 
+let CAPTURE = false;
+let IMAGE_URL = null;
 const fragBase = `
   precision mediump float;
   #define NUM_OCTAVES 5
@@ -128,17 +130,20 @@ function init() {
   bindLocations(gl, program, fragLocations);
 
   let animate = function(t) {
+
     if(canvas.clientWidth !== canvas.width) canvas.width = canvas.clientWidth;
     if(canvas.clientHeight !== canvas.height) canvas.height = canvas.clientHeight;
     gl.viewport(0,0,canvas.width, canvas.height);
     gl.uniform2fv(fragLocations.resLoc, [canvas.width, canvas.height]);
-
     gl.uniform1f(fragLocations.timeLoc, t/1000);
     gl.clearColor(1., 1., 1.0, 1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
     gl.drawArrays(gl.TRIANGLES, 0, vertexCount);
-
-    window.requestAnimationFrame(animate)
+    if(CAPTURE) {
+      CAPTURE = false;
+      IMAGE_URL = canvas.toDataURL("image/png");
+    }
+    window.requestAnimationFrame(animate);
   }
   animate(0);
 }
@@ -173,13 +178,27 @@ function bindLocations() {
 
 function updateShader(newShader) {
   let f = fragBase + `vec4(${newShader}, 1.0) ; }`;
+  let vs = createShader(gl.VERTEX_SHADER, shaders.vert);
   let fs = createShader(gl.FRAGMENT_SHADER, f);
   let sh =  gl.getAttachedShaders(program);
-  gl.detachShader(program, sh[1]);
-  gl.deleteShader(sh[1]);
+  sh.map( s => gl.detachShader(program, s) );
+  sh.map( s => gl.deleteShader(s) );
+  gl.attachShader(program, vs);
   gl.attachShader(program, fs);
   gl.linkProgram(program);
   bindLocations();
+
 }
 
-module.exports = { init, updateShader }
+function captureImage() {
+  CAPTURE = true;
+  let p = new Promise( (resolveFn, rejectFn) => {
+    setTimeout(()=>{
+      resolveFn(IMAGE_URL);
+    },100);
+  })
+  return p;
+}
+
+
+module.exports = { init, updateShader, captureImage }

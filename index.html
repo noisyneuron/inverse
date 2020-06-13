@@ -35,6 +35,7 @@
 
         <section class="editor">
           <textarea class="editor__textarea">type text here</textarea>
+          <button class="button button-publish"> publish </button>
           <button class="button button-save"> save </button>
           <button class="button button-load"> load </button>
           <input type="file" id="file" style="visibility:hidden;"></input>
@@ -99,6 +100,22 @@
           <input type="text" id="save__title" placeholder="Title"/>
           <input type="text" id="save__author" placeholder="Author" />
           <button class="button button-download"> download </button>
+        </div>
+
+        <div class="overlay__content overlay__content-publish">
+          <h2> Publish to the Gallery </h2>
+          <form id="publish__form">
+            <input type="text" id="publish__title" placeholder="Title"/>
+            <input type="text" id="publish__author" placeholder="Author" />
+            <input type="text" id="publish__twitter" placeholder="Twitter handle" />
+            <input type="submit" class="button button-post" value="publish"/>
+            <!-- publish </input> -->
+          </form>
+        </div>
+
+        <div class="overlay__content overlay__content-published">
+          <h2> Success! </h2>
+          <p> Here is a url to your work: <a id="published__url"></a> </p>
         </div>
 
         <div class="overlay__content overlay__content-makemap">

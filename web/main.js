@@ -12,6 +12,7 @@ let Generate = require('../src/Generator');
 let Maps = require('./maps.js');
 let Mapping = require('../src/Mapping');
 
+
 let $container = document.querySelector(".container");
 let $editor = document.querySelector(".editor__textarea");
 let $ops = document.querySelector(".stack .stack__elements");
@@ -28,6 +29,11 @@ let $mapTitle = document.querySelector("#map__title");
 let $file = document.querySelector("#file");
 let $saveTitle = document.querySelector("#save__title");
 let $saveAuthor = document.querySelector("#save__author");
+let $publishTitle = document.querySelector("#publish__title");
+let $publishAuthor = document.querySelector("#publish__author");
+let $publishTwitter = document.querySelector("#publish__twitter");
+let $pubUrl = document.querySelector("#published__url");
+let $publishForm = document.querySelector("#publish__form");
 
 let $mapSelect = document.querySelector(".dropdown");
 let $showExamples = document.querySelector(".button-examples");
@@ -35,6 +41,7 @@ let $shuffle = document.querySelector(".button-shuffle");
 let $restore = document.querySelector(".button-restore");
 let $save = document.querySelector(".button-save");
 let $load = document.querySelector(".button-load");
+let $publish = document.querySelector(".button-publish");
 let $download = document.querySelector(".button-download");
 let $close = document.querySelector(".button-close");
 let $createmap = document.querySelector(".button-createmap");
@@ -43,9 +50,15 @@ let $nextEg = document.querySelector(".button-next");
 let $prevEg = document.querySelector(".button-prev");
 let $about = document.querySelector(".button-about");
 
+
+let SERVER_URL = "https://api.inverse.website/";
+if(process.env.NODE_ENV !== "production") {
+  SERVER_URL = "http://localhost:3000/";
+}
 let currentMapIdx = 0;
 let customMapCount = 0;
 let currentEgIdx = 0;
+let PARENT = null;
 
 let stacks = [
   {"stack":[{"type":"OP","val":"x","vsize":1,"entropy":2},{"type":"OP","val":"fbm","vsize":1,"entropy":2},{"type":"OP","val":"y","vsize":1,"entropy":2},{"type":"OP","val":"fbm","vsize":1,"entropy":2},{"type":"OP","val":"t","vsize":1,"entropy":2},{"type":"OP","val":"sin","vsize":1,"entropy":2},{"type":"OP","val":"t","vsize":1,"entropy":2},{"type":"OP","val":"cos","vsize":1,"entropy":2},{"type":"OP","val":"distance","vsize":2,"entropy":1},{"type":"NUM","val":10,"vsize":null,"entropy":1},{"type":"OP","val":"*","vsize":1,"entropy":2},{"type":"OP","val":"fract","vsize":1,"entropy":2}]},
@@ -100,29 +113,38 @@ let loadNewMapping = (name, table) => {
 }
 
 let loadProgram = (data) => {
-  $editor.value = data.program.trim();
-  loadNewMapping("*" + data.map.name, data.map.table);
-  compile();
+  $editor.value = unescape(data.program);
+  let m = Maps.findIndex( x => x.name==data.map.name);
+  if(data.map.modified || m === -1) {
+    loadNewMapping("*" + data.map.name, data.map.table);
+  } else {
+    $mapSelect.value = m;
+  }
+  $mapSelect.dispatchEvent(new Event('change'));
 }
 
-let saveFile = () => {
+let getSaveData = () => {
   let p = $editor.value;
   let m = Maps[currentMapIdx];
   let res = compile();
-
   let data = {
     program: p,
     output: res.glsl,
     map: {
-      name: m.name.replace('*',''),
+      name: m.name[0] === "*" ? m.name.substr(1) : m.name,
       table: m.getMapping(),
       modified: m.modified
     },
-    stack: res.nodes,
-    title: $saveTitle.value || 'Untitled',
-    author: $saveAuthor.value || 'Anonymous'
+    parent: PARENT
+    // ,stack: res.nodes
   };
-  console.log(data);
+  return data;
+}
+
+let saveFile = () => {
+  let data = getSaveData();
+  data.title= $saveTitle.value || 'Untitled';
+  data.author= $saveAuthor.value || 'Anonymous';
   let blob = new Blob([JSON.stringify(data)], {type: 'application/json'});
   let url = URL.createObjectURL(blob);
   let a = document.createElement("a");
@@ -136,8 +158,41 @@ let saveFile = () => {
   }, 1000);
 }
 
+let publish = () => {
+  let data = getSaveData();
+  data.title= $publishTitle.value || 'Untitled';
+  data.author= $publishAuthor.value || 'Anonymous';
+  data.twitter= $publishTwitter.value;
+
+  canvas.captureImage()
+  .then( isrc => {
+    data.img = isrc;
+    // console.log(data.img);
+    return fetch(`${SERVER_URL}publish`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+      },
+      body: JSON.stringify(data),
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    $pubUrl.innerText = data.url;
+    $pubUrl.href = data.url;
+    openOverlay('published');
+  })
+  .catch((error) => {
+    alert(`Error: ${error}`)
+  });
+}
+
 let openOverlay = (name) => {
   $overlay.classList.add('visible');
+  if(document.querySelector(`.overlay__content.visible`)) {
+    document.querySelector(`.overlay__content.visible`).classList.remove("visible");
+  }
   document.querySelector(`.overlay__content-${name}`).classList.add("visible");
 }
 
@@ -162,7 +217,7 @@ let saveMap = () => {
   let vals = $mapForm.querySelectorAll('input');
   let blanks = [...vals].filter( v => v.value.trim().length === 0);
   if(blanks.length > 0) {
-    alert('Please fill out all the entire table.');
+    alert('Please fill out all the entire table.'); // ADD CASE TO PREVENT SPECIAL CHARS
   } else {
     let words = {};
     vals.forEach( v => {
@@ -245,6 +300,16 @@ $save.addEventListener('click', (e) => {
 
 $download.addEventListener('click', saveFile);
 
+$publish.addEventListener('click', () => {
+  openOverlay('publish');
+});
+
+// $post.addEventListener('click', publish);
+$publishForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  publish();
+})
+
 $load.addEventListener('click', (e) => {
   $file.click();
 });
@@ -295,8 +360,34 @@ $overlayWrapper.addEventListener('click', (e) => {
 
 $overlay.addEventListener('click', closeOverlay);
 
-canvas.init();
-displayMapOptions();
-displayMapping();
-populateMapForm();
-loadExamples();
+let init = () => {
+  canvas.init();
+  displayMapOptions();
+  displayMapping();
+  populateMapForm();
+  loadExamples();
+}
+
+let loadSketch = () => {
+  let params = (new URL(document.location)).searchParams;
+  let s = params.get('sketch');
+  if(s) {
+    let url = `${SERVER_URL}sketch/${s}`;
+    fetch(url)
+    .then( r => r.json() )
+    .then( data => {
+      init();
+      if(data.sketch) {
+        PARENT = s;
+        loadProgram(data.sketch);
+      }
+    })
+    .catch( e => {
+      init();
+    });
+  } else {
+    init();
+  }
+}
+
+loadSketch();

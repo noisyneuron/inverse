@@ -1,8 +1,8 @@
 {
-  "name": "lang2",
+  "name": "inverse",
   "version": "1.0.0",
   "description": "",
-  "main": "Language.js",
+  "main": "index.html",
   "scripts": {
     "test": "jest"
   },

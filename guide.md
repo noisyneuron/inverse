@@ -99,7 +99,7 @@ This documentation is a work in progress. A friendlier guide and perhaps some vi
 * An example,
   Say the stack has ` 4 5 6 7 8 9 `
 
-  * If a `+` is added to the stack, when it evaluates, it will collapse the last two elements, replacing them with `8 + 9`
+  * If a `+` is added to the stack, when it evaluates, it will collapse the last two elements, replacing them with `8 + 9`. So the stack will evaluate to: `4 5 6 7 17`
 
   * If a `+` is added when there is a **period** in the sentence, it will operate on pairs of numbers:
     `4 5 (6+8) (7+9)`  which evaluates to `4 5 14 16`
